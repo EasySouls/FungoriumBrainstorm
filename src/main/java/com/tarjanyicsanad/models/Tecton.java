@@ -1,7 +1,5 @@
 package com.tarjanyicsanad.models;
 
-import com.tarjanyicsanad.models.game.ITectonObserver;
-
 import java.util.*;
 
 public class Tecton {
@@ -12,7 +10,6 @@ public class Tecton {
     // We might not need this and can rely on the WorldMap
     private final List<Tecton> neighbours = new ArrayList<>();
 
-    private final List<ITectonObserver> observers = new ArrayList<>();
 
     public Tecton(Fungi ownFungi, Set<TectonType> tectonTypes) {
         types = tectonTypes;
@@ -22,21 +19,14 @@ public class Tecton {
     public void takeTurn(int round) {
         if (isType(TectonType.THREAD_ABSORBENT)) {
             for (Thread thread : threads) {
-
+                // Do something based on the type of the thread
+                // Maybe use some nice design pattern here
             }
         }
     }
 
     public void addThread(Thread thread) {
         threads.add(thread);
-    }
-
-    public void addObserver(ITectonObserver observer) {
-        observers.add(observer);
-    }
-
-    public void removeObserver(ITectonObserver observer) {
-        observers.remove(observer);
     }
 
     public void setFungi(Fungi fungi) {

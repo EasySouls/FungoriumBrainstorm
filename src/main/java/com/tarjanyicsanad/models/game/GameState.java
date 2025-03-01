@@ -26,7 +26,7 @@ public class GameState {
 
     public void init(int mushroomManCount, int bugmanCount) {
         // Initialize the map with 10 tectons
-        Set<Fungi> generatedFungi = map.initialize(10);
+        Set<Fungi> generatedFungi = map.initialize(10, mushroomManCount);
 
         initPlayers(mushroomManCount, bugmanCount);
         initCharacters(generatedFungi);

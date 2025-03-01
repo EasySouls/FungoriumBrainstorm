@@ -9,15 +9,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class WorldMap implements ITectonObserver {
+public class WorldMap {
     private final List<Tecton> tectons;
-    private final List<Thread> threads;
 
     // Maybe add an observer pattern here to notify the tectons about the game state
 
     public WorldMap() {
         tectons = new ArrayList<>();
-        threads = new ArrayList<>();
     }
 
     /**
@@ -25,17 +23,20 @@ public class WorldMap implements ITectonObserver {
      * @param tectonCount The number of tectons to generate
      * @return The set of fungi that were generated
      */
-    public Set<Fungi> initialize(int tectonCount) {
-        return generateTectons(tectonCount);
+    public Set<Fungi> initialize(int tectonCount, int mushroomManCount) {
+        return generateTectons(tectonCount, mushroomManCount);
     }
 
-    private Set<Fungi> generateTectons(int tectonCount) {
+    private Set<Fungi> generateTectons(int tectonCount, int mushroomManCount) {
         Set<Fungi> generatedFungi = new HashSet<>();
 
         for (int i = 0; i < tectonCount; i++) {
             ///  This might not work, since we need to know the current world state when generating a new Tecton
             ///  This is not a problem at the beginning of the game however
-            boolean shouldSpawnFungi = false;
+
+            // Might need to change this to a more complex logic
+            // For now it generates a fungi for the first mushroomManCount tectons
+            boolean shouldSpawnFungi = i < mushroomManCount;
             Tecton tecton = TectonFactory.generateTecton(i, shouldSpawnFungi, generatedFungi);
             tectons.add(tecton);
         }
@@ -47,11 +48,5 @@ public class WorldMap implements ITectonObserver {
         for (Tecton tecton : tectons) {
             tecton.takeTurn(round);
         }
-    }
-
-    @Override
-    public void onThreadAbsorbed(Tecton tecton, Thread thread) {
-        threads.remove(thread);
-        tecton.getThreads().remove(thread);
     }
 }
